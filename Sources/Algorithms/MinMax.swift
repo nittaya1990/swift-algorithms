@@ -28,11 +28,9 @@ extension Sequence {
     while let e = iterator.next() {
       // To be part of `result`, `e` must be strictly less than `result.last`.
       guard try areInIncreasingOrder(e, result.last!) else { continue }
+      result.removeLast()
       let insertionIndex =
         try result.partitioningIndex { try areInIncreasingOrder(e, $0) }
-      
-      assert(insertionIndex != result.endIndex)
-      result.removeLast()
       result.insert(e, at: insertionIndex)
     }
 
@@ -127,7 +125,7 @@ extension Sequence {
   /// largest values:
   ///
   ///     let numbers = [7, 1, 6, 2, 8, 3, 9]
-  ///     let smallestThree = numbers.max(count: 3, sortedBy: <)
+  ///     let largestThree = numbers.max(count: 3, sortedBy: <)
   ///     // [7, 8, 9]
   ///
   /// If you need to sort a sequence but only need to access its largest
@@ -199,7 +197,7 @@ extension Sequence where Element: Comparable {
   /// largest values:
   ///
   ///     let numbers = [7, 1, 6, 2, 8, 3, 9]
-  ///     let smallestThree = numbers.max(count: 3)
+  ///     let largestThree = numbers.max(count: 3)
   ///     // [7, 8, 9]
   ///
   /// If you need to sort a sequence but only need to access its largest
@@ -282,7 +280,7 @@ extension Collection {
   /// largest values:
   ///
   ///     let numbers = [7, 1, 6, 2, 8, 3, 9]
-  ///     let smallestThree = numbers.max(count: 3, sortedBy: <)
+  ///     let largestThree = numbers.max(count: 3, sortedBy: <)
   ///     // [7, 8, 9]
   ///
   /// If you need to sort a collection but only need to access its largest
